@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space) )
         {
+
             rb.AddForce(Vector2.up * jumpSpeed);
             isOnGround = false;
             Debug.Log("Space Pressed" + rb.velocity);
