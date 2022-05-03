@@ -10,9 +10,16 @@ public class PlaneProperities : MonoBehaviour
     [SerializeField] GameObject score;
     [SerializeField] GameObject saw;
 
+    public float outOfBound;
+    PlaneGenerator planeGenerator;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        GetPlaneBound();
+        planeGenerator = FindObjectOfType<PlaneGenerator>();
+
         scorePositions = new List<Transform>();
         sawPositions = new List<Transform>();
 
@@ -50,6 +57,15 @@ public class PlaneProperities : MonoBehaviour
         }
     }
 
+    private void GetPlaneBound()
+    {
+        //Vector2 screenBound = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,
+        //                                                                 Screen.height,
+        //                                                                 Camera.main.transform.position.z));
+        float planeWidth = GetComponent<SpriteRenderer>().bounds.size.x;
+        outOfBound = transform.position.x +  planeWidth;
+    }
+
     private void ShuffleList<T>(List<T> ts)
     {
         for (int i = 0; i < ts.Count; i++)
@@ -59,6 +75,11 @@ public class PlaneProperities : MonoBehaviour
             ts[i] = ts[randomIndex];
             ts[randomIndex] = temp;
         }
+    }
+
+    private void OnDestroy()
+    {
+        planeGenerator.planeNumber--;
     }
 
 }
